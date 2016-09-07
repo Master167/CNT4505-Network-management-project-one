@@ -1,9 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package clientside;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 /**
  *
@@ -21,7 +18,6 @@ public class UserInterface {
         this.threadCount = threadCount;
     }
     
-    
     public void displayMenu() {
         System.out.printf("Select a Command to be run on the server%n");
         System.out.printf("Threads to be used %d%n", this.threadCount);
@@ -33,6 +29,26 @@ public class UserInterface {
         System.out.printf("5. Get Server Current Users%n");
         System.out.printf("6. Get Server running processes%n");
         System.out.printf("7. Exit Program%n");
-        System.out.printf("Enter Selection [Numbers only]:");
+        System.out.printf("Enter Selection [Numbers only]: ");
+        return;
+    }
+    
+    public int getUserInput() {
+        int number;
+        Scanner input = new Scanner(System.in);
+        
+        try {
+            number = input.nextInt();
+            if (number < 0 || number > 7) {
+                System.out.printf("Invalid Command Given%n");
+                number = getUserInput();
+            }
+        }
+        catch (InputMismatchException ex) {
+            System.out.printf("Invalid Input: Input an Integer only%n");
+            number = getUserInput();
+        }
+        
+        return number;
     }
 }
