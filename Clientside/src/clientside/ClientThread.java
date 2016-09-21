@@ -9,7 +9,7 @@ import java.util.Timer;
 public class ClientThread {
     private double elaspedTime;
     private long startTime;
-    private String serverCommand;
+    private String serverCommand; 
     
     public ClientThread(String command) {
         this.serverCommand = command;

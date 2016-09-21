@@ -9,6 +9,8 @@ import java.util.Scanner;
 public class UserInterface {
     
     private int threadCount;
+    private String[] serverCommands = {"thread" ,"date", "uptime", "memory", "netstat", 
+        "users", "processes", "exit"};
     
     public UserInterface() {
         this.threadCount = 0;
@@ -50,5 +52,28 @@ public class UserInterface {
         }
         
         return number;
+    }
+    
+    public String getCommand() {
+        int commandId = this.getUserInput();
+        
+        return this.serverCommands[commandId];
+    }
+    
+    public int changeThreadCount() {
+        int newCount = 1;
+        
+        System.out.printf("Enter new thread Count: ");
+        Scanner input = new Scanner(System.in);
+        try {
+            newCount = input.nextInt();
+        }
+        catch (InputMismatchException ex) {
+            System.out.printf("Invalid Input: Input an Integer only%n");
+            newCount = this.changeThreadCount();
+        }
+
+        this.threadCount = newCount;
+        return newCount;
     }
 }

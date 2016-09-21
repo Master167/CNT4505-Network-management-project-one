@@ -9,7 +9,8 @@ public class ClientSide {
      */
     public static void main(String[] args) {
         UserInterface ui;
-        int command;
+        String command;
+        boolean running = true;
         
         if (args.length > 0 && !args[0].equals("")) {
             threadCount = Integer.parseInt(args[0]);
@@ -23,8 +24,21 @@ public class ClientSide {
         }
         
         ui = new UserInterface(threadCount);
-        ui.displayMenu();
-        command = ui.getUserInput();
+        while (running) {
+            ui.displayMenu();
+            command = ui.getCommand();
+
+            if (command.equals("thread")) {
+                threadCount = ui.changeThreadCount();
+            }
+            else if (command.equals("exit")) {
+                System.out.printf("Ending program%n");
+                running = false;
+            }
+            else {
+                System.out.printf("Command is: %s%n", command);
+            }
+        }
         
         return;
     }
