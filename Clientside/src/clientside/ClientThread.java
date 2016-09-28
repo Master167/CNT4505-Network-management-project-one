@@ -1,5 +1,8 @@
 package clientside;
 
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.Timer;
 
 /**
@@ -9,7 +12,11 @@ import java.util.Timer;
 public class ClientThread {
     private double elaspedTime;
     private long startTime;
-    private String serverCommand; 
+    private String serverCommand;
+    
+    // We'll just use these as constants
+    private static final int portNumber = 9001;
+    private static final String hostname = "";
     
     public ClientThread(String command) {
         this.serverCommand = command;
@@ -25,7 +32,17 @@ public class ClientThread {
     }
     
     public void startProcess() {
-        // Do the stuffs
+        try {
+            // Do the stuffs
+            Socket socket = new Socket(this.hostname, this.portNumber);
+        }
+        catch (UnknownHostException ex) {
+            ex.printStackTrace();
+        }
+        catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        
     }
     
     private void startTimer() {
