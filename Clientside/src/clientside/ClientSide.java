@@ -3,7 +3,7 @@ package clientside;
 public class ClientSide {
     
     private static int threadCount;
-    private static ClientThread[] threads;
+    private static Thread[] threads;
 
     /**
      * @param args the command line arguments
@@ -54,10 +54,10 @@ public class ClientSide {
      * @param command 
      */
     private static void generateThreads(int threadCount, String command) {
-        threads = new ClientThread[threadCount];
+        threads = new Thread[threadCount];
         
         for (int i = 0; i < threadCount; i++) {
-            threads[i] = new ClientThread(command);
+            threads[i] = new Thread(new ClientThread(command));
         }
     }
 
@@ -66,9 +66,19 @@ public class ClientSide {
     }
 
     private static void runThreads() {
-        for (int i = 0; i < threads.length; i++) {
-            threads[i].startProcess();
+        int i;
+        boolean running = true;
+        for (i = 0; i < threads.length; i++) {
+            threads[i].start();
         }
+        while (running) {
+            running = false;
+            for (i = 0; i < threads.length; i++) {
+                if (threads[i].isAlive()) {
+                    running = true;
+                }
+            }// end for
+        }//end while
     }
 
     

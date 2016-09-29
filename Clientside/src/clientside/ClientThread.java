@@ -8,7 +8,7 @@ import java.net.UnknownHostException;
  * This class is made to be the thread that communicates with the server.
  * @author Michael Frederick (initially)
  */
-public class ClientThread {
+public class ClientThread implements Runnable {
     private double elaspedTime;
     private long startTime;
     private String serverCommand;
@@ -30,7 +30,7 @@ public class ClientThread {
         return this.serverCommand;
     }
     
-    public void startProcess() {
+    public void run() {
         try {
             // Do the stuffs
             Socket socket = new Socket(this.hostname, this.portNumber);
