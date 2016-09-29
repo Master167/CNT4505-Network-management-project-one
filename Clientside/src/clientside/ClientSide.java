@@ -3,7 +3,7 @@ package clientside;
 public class ClientSide {
     
     private static int threadCount;
-    private static Thread[] threads;
+    private static ClientThread[] threads;
 
     /**
      * @param args the command line arguments
@@ -54,15 +54,19 @@ public class ClientSide {
      * @param command 
      */
     private static void generateThreads(int threadCount, String command) {
-        threads = new Thread[threadCount];
+        threads = new ClientThread[threadCount];
         
         for (int i = 0; i < threadCount; i++) {
-            threads[i] = new Thread(new ClientThread(command));
+            threads[i] = new ClientThread(command);
         }
     }
 
     private static void getResults() {
-        System.out.printf("getResults has not been created%n");
+        System.out.printf("Results from threads%n");
+        for(ClientThread t : threads) {
+            System.out.printf("%.2f, ", t.getElaspedTime());
+        }
+        System.out.printf("%n");
     }
 
     private static void runThreads() {
