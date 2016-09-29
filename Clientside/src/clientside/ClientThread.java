@@ -3,7 +3,6 @@ package clientside;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.Timer;
 
 /**
  * This class is made to be the thread that communicates with the server.

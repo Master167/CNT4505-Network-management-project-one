@@ -3,6 +3,7 @@ package clientside;
 public class ClientSide {
     
     private static int threadCount;
+    private static ClientThread[] threads;
 
     /**
      * @param args the command line arguments
@@ -37,10 +38,38 @@ public class ClientSide {
             }
             else {
                 System.out.printf("Command is: %s%n", command);
+                generateThreads(threadCount, command);
+                runThreads();
+                getResults();
             }
         }
         
         return;
     }
+    
+    /**
+     * Builds the threads for the specified command, threads will be stored in
+     * threads[]
+     * @param threadCount
+     * @param command 
+     */
+    private static void generateThreads(int threadCount, String command) {
+        threads = new ClientThread[threadCount];
+        
+        for (int i = 0; i < threadCount; i++) {
+            threads[i] = new ClientThread(command);
+        }
+    }
+
+    private static void getResults() {
+        System.out.printf("getResults has not been created%n");
+    }
+
+    private static void runThreads() {
+        for (int i = 0; i < threads.length; i++) {
+            threads[i].startProcess();
+        }
+    }
+
     
 }
