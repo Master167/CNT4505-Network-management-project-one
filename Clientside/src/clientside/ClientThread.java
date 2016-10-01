@@ -1,6 +1,8 @@
 package clientside;
 
+import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -15,7 +17,7 @@ public class ClientThread extends Thread {
     
     // We'll just use these as constants
     private static final int portNumber = 9001;
-    private static final String hostname = "";
+    private static final String hostname = "192.168.100.106";
     
     public ClientThread(String command) {
         this.serverCommand = command;
@@ -33,20 +35,23 @@ public class ClientThread extends Thread {
     public void run() {
         try {
             // Do the stuffs
-            //Socket socket = new Socket(this.hostname, this.portNumber);
             startTimer();
-            Thread.sleep((long) (Math.random() * 100.0));
+            Socket socket = new Socket(this.hostname, this.portNumber);
+            PrintStream outputStream = new PrintStream(socket.getOutputStream());
+            DataInputStream inputStream = new DataInputStream(socket.getInputStream());
+            outputStream.printf(this.serverCommand);
+            System.out.printf(inputStream.readLine());
             endTimer();
+        }
+        catch (UnknownHostException ex) {
+            ex.printStackTrace();
+        }
+        catch (IOException ex) {
+            ex.printStackTrace();
         }
         catch (Exception ex) {
             System.out.printf("Exception thrown%n");
         }
-//        catch (UnknownHostException ex) {
-//            ex.printStackTrace();
-//        }
-//        catch (IOException ex) {
-//            ex.printStackTrace();
-//        }
         
     }
     
