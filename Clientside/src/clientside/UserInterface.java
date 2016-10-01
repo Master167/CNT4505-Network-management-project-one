@@ -9,8 +9,8 @@ import java.util.Scanner;
 public class UserInterface {
     
     private int threadCount;
-    private String[] serverCommands = {"thread" ,"date", "uptime", "memory", "netstat", 
-        "users", "processes", "exit"};
+    private String[] serverCommands = {"thread" ,"date", "uptime", "free", "netstat", 
+        "users", "pgrep", "exit"};
     
     public UserInterface() {
         this.threadCount = 0;
