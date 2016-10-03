@@ -8,6 +8,8 @@ import java.lang.management.*;
 
 public class ServerSide {
 
+    private static final int portNumber = 9001;
+    private static final String hostname = "192.168.100.106";
     /**
      * @param args the command line arguments
      Authors: Kevin Poon, 
@@ -23,15 +25,14 @@ public class ServerSide {
     
     public static void main(String[] args) {
         //declarations
-        ServerSocket echoServer = null;
-        String line;
-        DataInputStream is;
-        PrintStream os;
+        
+        ServerSocket serverSocket = null;
         Socket clientSocket = null;
+        
         
         //Server socket
         try {
-           echoServer = new ServerSocket(9001);
+           serverSocket = new ServerSocket(9001);
            System.out.println("Socket connection created.");
         }
         catch (IOException e) {
@@ -39,34 +40,50 @@ public class ServerSide {
         }
         
         try { //open I/O stream
-           clientSocket = echoServer.accept();
-           is = new DataInputStream(clientSocket.getInputStream());
-           os = new PrintStream(clientSocket.getOutputStream());
-           while (true) { //echo data back to client
-             line = is.readLine();
-             os.println(line); 
-           }//end while
-        }   
+           clientSocket = serverSocket.accept();
+           PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+           BufferedReader in = new BufferedReader(
+                new InputStreamReader(clientSocket.getInputStream()));
+           
+            //listen for client commands
+            String inputLine, outputLine;
+            while((inputLine = in.readLine()) != null) {
+                //Client command: date
+                if (inputLine.equals("date")) {
+                    outputLine = getDate();
+                    out.println(outputLine);
+                }
+                //Client Command: uptime
+                if (inputLine.equals("date")) {
+                    out.println(getUptime());
+                }
+                //Client command: exit
+                if (inputLine.equals("exit")) {
+                    out.println("Exiting.");
+                    break;
+                }
+            }
+        }
         catch (IOException e) {
            System.out.println(e);
         }
         
     }//end main 
     
-    public void getDate() {
+    public static String getDate() {
         Date date = new Date();
         
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        System.out.println(dateFormat.format(date));
+        //System.out.println(dateFormat.format(date));
         
-        return;  
+        return dateFormat.format(date);  
     }//end getDate()
 
-    public void getUptime() {
+    public static long getUptime() {
         RuntimeMXBean rb = ManagementFactory.getRuntimeMXBean();
         long uptime = rb.getUptime();
-        System.out.println(uptime);
-        return;
+        //System.out.println(uptime);
+        return uptime;
     }//end getUptime
     
     /*
@@ -115,4 +132,6 @@ public class ServerSide {
             System.out.println(e);
         }
 */
+
+
 
