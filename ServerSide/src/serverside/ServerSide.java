@@ -9,7 +9,7 @@ import java.lang.management.*;
 public class ServerSide {
 
     private static final int portNumber = 9001;
-    private static final String hostname = "192.168.100.106";
+    private static final String hostname = "192.168.100.105";
     /**
      * @param args the command line arguments
      Authors: Kevin Poon, 
@@ -47,6 +47,11 @@ public class ServerSide {
            
             //listen for client commands
             String inputLine, outputLine;
+            inputLine = in.readLine();
+            System.out.println("Client command:" + inputLine);
+            outputLine = getDate();
+            out.println(outputLine);
+            /*
             while((inputLine = in.readLine()) != null) {
                 //Client command: date
                 if (inputLine.equals("date")) {
@@ -63,6 +68,7 @@ public class ServerSide {
                     break;
                 }
             }
+            */
         }
         catch (IOException e) {
            System.out.println(e);
@@ -132,6 +138,4 @@ public class ServerSide {
             System.out.println(e);
         }
 */
-
-
 
