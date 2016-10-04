@@ -17,7 +17,7 @@ public class ClientThread extends Thread {
     
     // We'll just use these as constants
     private static final int portNumber = 9001;
-    private static final String hostname = "192.168.100.106";
+    private static final String hostname = "192.168.100.105";
     
     public ClientThread(String command) {
         this.serverCommand = command;
@@ -39,8 +39,8 @@ public class ClientThread extends Thread {
             Socket socket = new Socket(this.hostname, this.portNumber);
             PrintStream outputStream = new PrintStream(socket.getOutputStream());
             DataInputStream inputStream = new DataInputStream(socket.getInputStream());
-            outputStream.printf(this.serverCommand);
-            System.out.printf(inputStream.readLine());
+            outputStream.println(this.serverCommand);
+            System.out.println(inputStream.readLine());
             endTimer();
         }
         catch (UnknownHostException ex) {
