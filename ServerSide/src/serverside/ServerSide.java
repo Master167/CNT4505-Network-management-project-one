@@ -39,36 +39,34 @@ public class ServerSide {
            System.out.println(e);
         }
         
-        try { //open I/O stream
-           clientSocket = serverSocket.accept();
-           PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-           BufferedReader in = new BufferedReader(
-                new InputStreamReader(clientSocket.getInputStream()));
-           
-            //listen for client commands
-            String inputLine, outputLine;
-            inputLine = in.readLine();
-            System.out.println("Client command:" + inputLine);
-            outputLine = getDate();
-            out.println(outputLine);
-            /*
-            while((inputLine = in.readLine()) != null) {
-                //Client command: date
-                if (inputLine.equals("date")) {
-                    outputLine = getDate();
-                    out.println(outputLine);
-                }
-                //Client Command: uptime
-                if (inputLine.equals("date")) {
-                    out.println(getUptime());
-                }
-                //Client command: exit
-                if (inputLine.equals("exit")) {
-                    out.println("Exiting.");
-                    break;
+        try {
+            boolean running = true;
+            while (running) {
+                //open I/O stream
+                clientSocket = serverSocket.accept();
+                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+                BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+
+                //listen for client commands
+                String inputLine, outputLine;
+                while(((inputLine = in.readLine()) != null) && !clientSocket.isClosed()) {
+                    //Client command: date
+                    if (inputLine.equals("date")) {
+                        outputLine = getDate();
+                        out.println(outputLine);
+                    }
+                    //Client Command: uptime
+                    if (inputLine.equals("uptime")) {
+                        out.println(getUptime());
+                    }
+                    //Client command: exit
+                    if (inputLine.equals("exit")) {
+                        System.out.println("Exiting.");
+                        running = false;
+                        break;
+                    }
                 }
             }
-            */
         }
         catch (IOException e) {
            System.out.println(e);
@@ -80,7 +78,7 @@ public class ServerSide {
         Date date = new Date();
         
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        //System.out.println(dateFormat.format(date));
+        System.out.println(dateFormat.format(date));
         
         return dateFormat.format(date);  
     }//end getDate()
@@ -88,7 +86,7 @@ public class ServerSide {
     public static long getUptime() {
         RuntimeMXBean rb = ManagementFactory.getRuntimeMXBean();
         long uptime = rb.getUptime();
-        //System.out.println(uptime);
+        System.out.println(uptime);
         return uptime;
     }//end getUptime
     

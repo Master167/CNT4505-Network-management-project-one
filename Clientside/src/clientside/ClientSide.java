@@ -1,5 +1,10 @@
 package clientside;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
+
+
 public class ClientSide {
     
     private static int threadCount;
@@ -33,6 +38,7 @@ public class ClientSide {
                 threadCount = ui.changeThreadCount();
             }
             else if (command.equals("exit")) {
+                signalServerExit();
                 System.out.printf("Ending program%n");
                 running = false;
             }
@@ -83,6 +89,17 @@ public class ClientSide {
                 }
             }// end for
         }//end while
+    }
+    
+    private static void signalServerExit() {
+        
+        try {
+            // Signal Server End
+            Socket socket = new Socket(ClientThread.hostname, ClientThread.portNumber);
+            PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
+            output.printf("exit%n");
+        }
+        catch (IOException ex) {}
     }
 
     
