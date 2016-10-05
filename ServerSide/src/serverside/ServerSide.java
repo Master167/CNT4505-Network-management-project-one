@@ -52,12 +52,15 @@ public class ServerSide {
                 while(((inputLine = in.readLine()) != null) && !clientSocket.isClosed()) {
                     //Client command: date
                     if (inputLine.equals("date")) {
-                        outputLine = getDate();
-                        out.println(outputLine);
+                        out.println(getDate());
                     }
                     //Client Command: uptime
                     if (inputLine.equals("uptime")) {
                         out.println(getUptime());
+                    }
+                    //Client command: current users
+                    if (inputLine.equals("users)) {
+                        out.println(System.getProperty("user.name"));
                     }
                     //Client command: exit
                     if (inputLine.equals("exit")) {
@@ -96,44 +99,4 @@ public class ServerSide {
     
     
 }//end class ServerSide-----------------------------------------------
-
-//useful code
-
-/*
-        //open socket
-        ServerSocket MyService; 
-        try {
-            MyServerice = new ServerSocket(PortNumber);
-        }
-        catch (IOException e) {
-            System.out.println(e);
-        }
-        
-        //create server socket for listening
-        Socket clientSocket = null;
-        try {
-            serviceSocket = MyService.accept();
-        }
-        catch (IOException e) {
-            System.out.println(e);
-        }
-        
-        //recieve input stream from Client
-        DataInputStream input;
-        try {
-            input = new DataInputStream(serviceSocket.getInputStream());
-        }
-        catch (IOException e) {
-        System.out.println(e);
-        }
-        
-        //send output stream to Client
-        PrintStream output;
-        try {
-            output = new PrintStream(serviceSocket.getOutputStream());
-        }
-        catch (IOException e) {
-            System.out.println(e);
-        }
-*/
 
