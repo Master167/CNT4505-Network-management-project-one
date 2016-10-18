@@ -1,4 +1,4 @@
-package clientside;
+//package clientside;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,14 +15,16 @@ public class ClientThread extends Thread {
     private double elaspedTime;
     private long startTime;
     private String serverCommand;
+    private String myHost;
     
     // We'll just use these as constants
     public static final int portNumber = 9001;
     public static final String hostname = "192.168.100.105";
     
-    public ClientThread(String command) {
+    public ClientThread(String command, String myHost) {
         this.serverCommand = command;
         this.elaspedTime = 0;
+        this.myHost = myHost;
     }
     
     public double getElaspedTime() {
@@ -38,11 +40,16 @@ public class ClientThread extends Thread {
             String str;
             // Do the stuffs
             startTimer();
-            Socket socket = new Socket(this.hostname, this.portNumber);
+            Socket socket = new Socket(this.myHost, this.portNumber);
             PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             output.println(this.serverCommand);
-            System.out.printf("From Server: %s%n", input.readLine());
+	    String line = null;
+	    System.out.println("From Server: ");
+	    while((line = input.readLine()) != null) {
+            	System.out.println(line);
+	    }
+	    System.out.println("-----------------------------------------------------------------------");
             socket.close();
             endTimer();
         }
