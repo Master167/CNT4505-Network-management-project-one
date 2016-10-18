@@ -1,4 +1,4 @@
-package clientside;
+//package clientside;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,11 +16,23 @@ public class ClientSide {
     public static void main(String[] args) {
         UserInterface ui;
         String command;
+        String myHost;
         boolean running = true;
         
-        if (args.length > 0 && !args[0].equals("")) {
-            threadCount = Integer.parseInt(args[0]);
+        if (args.length < 1) { //ends if no command line arg.
+            System.out.println("Error: No host name. Exiting.");
+            return;
+        }    
+        else {
+            myHost = args[0];
+            threadCount = 1;
         }
+        
+        /*    
+        if (args.length > 0 && !args[0].equals("")) {
+            //threadCount = Integer.parseInt(args[0]);
+        }
+        
         else {
             threadCount = 1;
         }
@@ -28,7 +40,7 @@ public class ClientSide {
         if (threadCount < 1) {
             threadCount = 1;
         }
-        
+        */
         ui = new UserInterface(threadCount);
         while (running) {
             ui.displayMenu();
@@ -44,7 +56,7 @@ public class ClientSide {
             }
             else {
                 System.out.printf("Command is: %s%n", command);
-                generateThreads(threadCount, command);
+                generateThreads(threadCount, command, myHost);
                 runThreads();
                 getResults();
             }
@@ -59,11 +71,11 @@ public class ClientSide {
      * @param threadCount
      * @param command 
      */
-    private static void generateThreads(int threadCount, String command) {
+    private static void generateThreads(int threadCount, String command, String myHost) {
         threads = new ClientThread[threadCount];
         
         for (int i = 0; i < threadCount; i++) {
-            threads[i] = new ClientThread(command);
+            threads[i] = new ClientThread(command, myHost);
         }
     }
 
