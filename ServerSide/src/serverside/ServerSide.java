@@ -50,7 +50,8 @@ public class ServerSide {
 
                 //listen for client commands
                 
-                while(((command = in.readLine()) != null) && !clientSocket.isClosed()) {
+                while(!clientSocket.isClosed() && ((command = in.readLine()) != null)) {
+        System.out.println(command);
                     /*//Client command: date
                     if (inputLine.equals("date")) {
                         out.println(getDate());
@@ -85,13 +86,16 @@ public class ServerSide {
          
                           String line = null;
                           while ((line = input.readLine()) != null) {
+           System.out.println(line);
                              out.println(line);
                           }
-         
+        out.close();
+        System.out.println("Done with process");         
                           pr.waitFor();
                        } 
                     
                        catch (Exception e) {
+        System.out.println("Runtime Catch");
                           System.out.println(e.toString());
                        }                  
                     }
