@@ -10,7 +10,7 @@ public class UserInterface {
     
     private int threadCount;
     private String[] serverCommands = {"thread" ,"date", "uptime", "free", "netstat", 
-        "users", "pgrep", "exit"};
+        "users", "ps aux", "exit"};
     
     public UserInterface() {
         this.threadCount = 0;
