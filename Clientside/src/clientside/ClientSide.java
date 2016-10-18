@@ -25,7 +25,13 @@ public class ClientSide {
         }    
         else {
             myHost = args[0];
-            threadCount = 1;
+            if (!args[1].equals("")) {
+                threadCount = Integer.parseInt(args[1]));
+            }
+            else {
+                System.out.println("Default thread count: 1");
+                threadCount = 1;
+            }
         }
         
         /*    
