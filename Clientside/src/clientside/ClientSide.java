@@ -98,6 +98,7 @@ public class ClientSide {
             Socket socket = new Socket(ClientThread.hostname, ClientThread.portNumber);
             PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
             output.printf("exit%n");
+            socket.close();
         }
         catch (IOException ex) {}
     }
