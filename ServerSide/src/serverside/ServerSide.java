@@ -12,7 +12,7 @@ public class ServerSide {
     private static final String hostname = "192.168.100.105";
     /**
      * @param args the command line arguments
-     Authors: Kevin Poon, 
+     Authors: Kevin Poon, Khue Nguyen 
      Tasks:
            get/send current date and time
            get/send uptime
@@ -28,12 +28,12 @@ public class ServerSide {
         
         ServerSocket serverSocket = null;
         Socket clientSocket = null;
-        
+        String command;
         
         //Server socket
         try {
            serverSocket = new ServerSocket(9001);
-           System.out.println("Socket connection created.");
+           System.out.println("Socket created.");
         }
         catch (IOException e) {
            System.out.println(e);
@@ -44,13 +44,14 @@ public class ServerSide {
             while (running) {
                 //open I/O stream
                 clientSocket = serverSocket.accept();
+                System.out.println("Client Accepted");
                 PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
                 BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
                 //listen for client commands
-                String inputLine, outputLine;
-                while(((inputLine = in.readLine()) != null) && !clientSocket.isClosed()) {
-                    //Client command: date
+                
+                while(((command = in.readLine()) != null) && !clientSocket.isClosed()) {
+                    /*//Client command: date
                     if (inputLine.equals("date")) {
                         out.println(getDate());
                     }
@@ -59,7 +60,7 @@ public class ServerSide {
                         out.println(getUptime());
                     }
                     //Client command: current users
-                    if (inputLine.equals("users)) {
+                    if (inputLine.equals("users")) {
                         out.println(System.getProperty("user.name"));
                     }
                     //Client command: exit
@@ -67,6 +68,32 @@ public class ServerSide {
                         System.out.println("Exiting.");
                         running = false;
                         break;
+                    } Nope */
+                    
+                    if (command.equals("exit")) {
+                       System.out.println("Exiting.");
+                       running = false;
+                       break;
+                    }
+                    
+                    else {
+                       try {
+                          Runtime rt = Runtime.getRuntime();
+                          Process pr = rt.exec(command);
+         
+                          BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+         
+                          String line = null;
+                          while ((line = input.readLine()) != null) {
+                             out.println(line);
+                          }
+         
+                          pr.waitFor();
+                       } 
+                    
+                       catch (Exception e) {
+                          System.out.println(e.toString());
+                       }                  
                     }
                 }
             }
@@ -77,7 +104,7 @@ public class ServerSide {
         
     }//end main 
     
-    public static String getDate() {
+    /*public static String getDate() {
         Date date = new Date();
         
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -85,7 +112,6 @@ public class ServerSide {
         
         return dateFormat.format(date);  
     }//end getDate()
-
     public static long getUptime() {
         RuntimeMXBean rb = ManagementFactory.getRuntimeMXBean();
         long uptime = rb.getUptime();
@@ -95,7 +121,7 @@ public class ServerSide {
     
     /*
     memory use method here
-    */
+    Also nope */
     
     
 }//end class ServerSide-----------------------------------------------
