@@ -39,6 +39,7 @@ public class ClientThread extends Thread {
         try {
             String str;
             // Do the stuffs
+	    System.out.println("----------------------------------------------------------------------");
             startTimer();
             Socket socket = new Socket(this.myHost, this.portNumber);
             PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
@@ -49,7 +50,7 @@ public class ClientThread extends Thread {
 	    while((line = input.readLine()) != null) {
             	System.out.println(line);
 	    }
-	    System.out.println("-----------------------------------------------------------------------");
+	    System.out.println("----------------------------------------------------------------------");
             socket.close();
             endTimer();
         }
