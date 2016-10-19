@@ -86,13 +86,13 @@ public class ClientSide {
 
     private static void getResults(int threadCount) {
         double sum = 0;
-        double threads = (double)threadCount;
+        
         System.out.printf("Server response times (milliseconds): %n");
         for(ClientThread t : threads) {
             System.out.printf("%.2f, ", t.getElaspedTime());
-            sum += t.getElaspedTime();
+	    sum += t.getElaspedTime();
         }
-        System.out.printf("Latency (mean server response time): %.2f ms", (sum/threads));
+        System.out.printf("%nLatency (mean server response time): %.2f ms", (sum/((double)threadCount)));
         System.out.printf("%n");
     }
 
