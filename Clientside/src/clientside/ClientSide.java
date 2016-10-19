@@ -60,9 +60,10 @@ public class ClientSide {
             }
             else {
                 System.out.printf("Command is: %s%n", command);
+                System.out.println("From Server: ");
                 generateThreads(threadCount, command, myHost);
                 runThreads();
-                getResults();
+                getResults(threadCount);
             }
         }
         
@@ -83,11 +84,15 @@ public class ClientSide {
         }
     }
 
-    private static void getResults() {
-        System.out.printf("Results from threads%n");
+    private static void getResults(int threadCount) {
+        double sum = 0;
+        double threads = (double)threadCount;
+        System.out.printf("Server response times (milliseconds): %n");
         for(ClientThread t : threads) {
             System.out.printf("%.2f, ", t.getElaspedTime());
+            sum += t.getElaspedTime();
         }
+        System.out.printf("Latency (mean server response time): %.2f ms", (sum/threads));
         System.out.printf("%n");
     }
 
