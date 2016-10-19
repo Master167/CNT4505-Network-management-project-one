@@ -6,10 +6,12 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.*;
 
 /**
  * This class is made to be the thread that communicates with the server.
- * @author Michael Frederick (initially)
+ * @author Michael Frederick (initially), Kevin Janssen
  */
 public class ClientThread extends Thread {
     private double elaspedTime;
@@ -40,19 +42,35 @@ public class ClientThread extends Thread {
             String str;
             // Do the stuffs
 	    //System.out.println("----------------------------------------------------------------------");
-            startTimer();
+       String line = null;
+       List<String> list = Collections.synchronizedList(new ArrayList<String>());
+            //startTimer();
             Socket socket = new Socket(this.myHost, this.portNumber);
             PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
-            BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            BufferedReader inputPrint = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            //BufferedReader inputResponse = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            startTimer();
             output.println(this.serverCommand);
-	    String line = null;
+            //endTimer();
+	    //String line = null;
 	    //System.out.println("From Server: ");
-	    while((line = input.readLine()) != null) {
-            	System.out.println(line);
-	    }
-	    System.out.println("----------------------------------------------------------------------");
+	    synchronized (list) {
+         while((line = inputPrint.readLine()) != null) {
+            	list.add(line);
+	      }
+       }
+       endTimer();
+       synchronized (list) {
+         Iterator<String> listIt = list.iterator();
+         while (listIt.hasNext()) {
+            System.out.println(listIt.next());
+            System.out.println("----------------------------------------------------------------------");
+         }
+       }
+          
+	    
             socket.close();
-            endTimer();
+            //endTimer();
         }
         catch (UnknownHostException ex) {
             ex.printStackTrace();
