@@ -20,7 +20,6 @@ public class ClientThread extends Thread {
     
     // We'll just use these as constants
     public static final int portNumber = 9001;
-    public static final String hostname = "192.168.100.105";
     
     public ClientThread(String command, String myHost) {
         this.serverCommand = command;
@@ -48,21 +47,11 @@ public class ClientThread extends Thread {
             Socket socket = new Socket(this.myHost, this.portNumber);
             PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-	    /*
-	    startTimer(); //moved the timers closer to the request
-            output.println(this.serverCommand);
-	    //System.out.println("From Server: ");
-	    while((line = input.readLine()) != null) {
-            	System.out.println(line);
-	    }
-	    endTimer();
-	    System.out.println("----------------------------------------------------------------------");
-            socket.close();
-            */
+	    
 	    totalTime = 0;
 	    startTimer(); //moved the timers closer to the request
             output.println(this.serverCommand);
-	    //System.out.println("From Server: ");
+	    
 	    while((line = input.readLine()) != null) {
 		endTimer();
 		this.totalTime += this.elaspedTime;
@@ -83,7 +72,6 @@ public class ClientThread extends Thread {
         catch (Exception ex) {
             System.out.printf("Exception thrown%n");
         }
-        
     }
     
     private void startTimer() {
