@@ -36,15 +36,7 @@ public class ClientSide {
         if (threadCount < 1) {
             threadCount = 1;
         }
-        /*    
-        if (args.length > 0 && !args[0].equals("")) {
-            //threadCount = Integer.parseInt(args[0]);
-        }
         
-        else {
-            threadCount = 1;
-        }
-        */
         ui = new UserInterface(threadCount);
         while (running) {
             ui.displayMenu();
@@ -123,6 +115,4 @@ public class ClientSide {
         }
         catch (IOException ex) {}
     }
-
-    
 }
