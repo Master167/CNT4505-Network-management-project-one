@@ -25,7 +25,7 @@ public class ClientSide {
         }    
         else {
             myHost = args[0];
-            if (args.length == 2) {
+            if (args.length == 2) { //optional command ln arg for thread count
                 threadCount = Integer.parseInt(args[1]);
             }
             else {
@@ -33,17 +33,15 @@ public class ClientSide {
                 threadCount = 1;
             }
         }
-        
+        if (threadCount < 1) {
+            threadCount = 1;
+        }
         /*    
         if (args.length > 0 && !args[0].equals("")) {
             //threadCount = Integer.parseInt(args[0]);
         }
         
         else {
-            threadCount = 1;
-        }
-        
-        if (threadCount < 1) {
             threadCount = 1;
         }
         */
