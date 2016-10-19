@@ -39,14 +39,14 @@ public class ClientThread extends Thread {
         try {
             String str;
             // Do the stuffs
-	    System.out.println("----------------------------------------------------------------------");
+	    //System.out.println("----------------------------------------------------------------------");
             startTimer();
             Socket socket = new Socket(this.myHost, this.portNumber);
             PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             output.println(this.serverCommand);
 	    String line = null;
-	    System.out.println("From Server: ");
+	    //System.out.println("From Server: ");
 	    while((line = input.readLine()) != null) {
             	System.out.println(line);
 	    }
