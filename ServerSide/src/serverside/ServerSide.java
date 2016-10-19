@@ -1,4 +1,4 @@
-package serverside;
+//package serverside;
 
 import java.io.*;
 import java.net.*;
@@ -8,8 +8,6 @@ import java.lang.management.*;
 
 public class ServerSide {
 
-    private static final int portNumber = 9001;
-    private static final String hostname = "192.168.100.105";
     /**
      * @param args the command line arguments
      Authors: Kevin Poon, Khue Nguyen 
@@ -51,25 +49,7 @@ public class ServerSide {
                 //listen for client commands
                 
                 while(!clientSocket.isClosed() && ((command = in.readLine()) != null)) {
-        System.out.println(command);
-                    /*//Client command: date
-                    if (inputLine.equals("date")) {
-                        out.println(getDate());
-                    }
-                    //Client Command: uptime
-                    if (inputLine.equals("uptime")) {
-                        out.println(getUptime());
-                    }
-                    //Client command: current users
-                    if (inputLine.equals("users")) {
-                        out.println(System.getProperty("user.name"));
-                    }
-                    //Client command: exit
-                    if (inputLine.equals("exit")) {
-                        System.out.println("Exiting.");
-                        running = false;
-                        break;
-                    } Nope */
+                    System.out.println(command);
                     
                     if (command.equals("exit")) {
                        System.out.println("Exiting.");
@@ -86,47 +66,29 @@ public class ServerSide {
          
                           String line = null;
                           while ((line = input.readLine()) != null) {
-           System.out.println(line);
+                             System.out.println(line);
                              out.println(line);
                           }
-        out.close();
-        System.out.println("Done with process");         
+                          
+                          out.close();
+                          System.out.println("Done with process");         
                           pr.waitFor();
                        } 
                     
                        catch (Exception e) {
-        System.out.println("Runtime Catch");
+                          System.out.println("Runtime Catch");
                           System.out.println(e.toString());
                        }                  
                     }
                 }
             }
         }
+        
         catch (IOException e) {
            System.out.println(e);
         }
         
     }//end main 
-    
-    /*public static String getDate() {
-        Date date = new Date();
-        
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        System.out.println(dateFormat.format(date));
-        
-        return dateFormat.format(date);  
-    }//end getDate()
-    public static long getUptime() {
-        RuntimeMXBean rb = ManagementFactory.getRuntimeMXBean();
-        long uptime = rb.getUptime();
-        System.out.println(uptime);
-        return uptime;
-    }//end getUptime
-    
-    /*
-    memory use method here
-    Also nope */
-    
-    
+  
 }//end class ServerSide-----------------------------------------------
 
