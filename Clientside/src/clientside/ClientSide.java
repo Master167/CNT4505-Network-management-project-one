@@ -9,6 +9,7 @@ public class ClientSide {
     
     private static int threadCount;
     private static ClientThread[] threads;
+    private static String myHost;
 
     /**
      * @param args the command line arguments
@@ -16,7 +17,6 @@ public class ClientSide {
     public static void main(String[] args) {
         UserInterface ui;
         String command;
-        String myHost;
         boolean running = true;
         
         if (args.length < 1) { //ends if no command line arg.
@@ -108,7 +108,7 @@ public class ClientSide {
         
         try {
             // Signal Server End
-            Socket socket = new Socket(ClientThread.hostname, ClientThread.portNumber);
+            Socket socket = new Socket(myHost, ClientThread.portNumber);
             PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
             output.printf("exit%n");
             socket.close();
