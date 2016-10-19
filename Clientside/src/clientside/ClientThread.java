@@ -13,6 +13,7 @@ import java.net.UnknownHostException;
  */
 public class ClientThread extends Thread {
     private double elaspedTime;
+    private double totalTime;
     private long startTime;
     private String serverCommand;
     private String myHost;
@@ -31,6 +32,10 @@ public class ClientThread extends Thread {
         return this.elaspedTime;
     }
     
+    public double getTotalTime() {
+	return this.totalTime;
+    }
+	
     public String getServerCommand() {
         return this.serverCommand;
     }
@@ -43,6 +48,7 @@ public class ClientThread extends Thread {
             Socket socket = new Socket(this.myHost, this.portNumber);
             PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+	    /*
 	    startTimer(); //moved the timers closer to the request
             output.println(this.serverCommand);
 	    //System.out.println("From Server: ");
@@ -52,7 +58,21 @@ public class ClientThread extends Thread {
 	    endTimer();
 	    System.out.println("----------------------------------------------------------------------");
             socket.close();
-            
+            */
+	    totalTime = 0;
+	    startTimer(); //moved the timers closer to the request
+            output.println(this.serverCommand);
+	    //System.out.println("From Server: ");
+	    while((line = input.readLine()) != null) {
+		endTimer();
+		this.totalTime += this.elaspedTime;
+            	System.out.println(line);
+		startTimer();
+	    }
+	    endTimer();
+	    this.totalTime += this.elaspedTime;
+	    System.out.println("----------------------------------------------------------------------");
+            socket.close();
         }
         catch (UnknownHostException ex) {
             ex.printStackTrace();
