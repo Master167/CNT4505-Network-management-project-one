@@ -89,8 +89,8 @@ public class ClientSide {
         
         System.out.printf("Server response times (milliseconds): %n");
         for(ClientThread t : threads) {
-            System.out.printf("%.2f, ", t.getElaspedTime());
-	    sum += t.getElaspedTime();
+            System.out.printf("%.2f, ", t.getTotalTime());
+	    sum += t.getTotalTime();
         }
         System.out.printf("%nLatency (mean server response time): %.2f ms", (sum/((double)threadCount)));
         System.out.printf("%n");
