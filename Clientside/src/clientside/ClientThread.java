@@ -38,21 +38,21 @@ public class ClientThread extends Thread {
     public void run() {
         try {
             String str;
+	    String line = null;
             // Do the stuffs
-	    //System.out.println("----------------------------------------------------------------------");
-            startTimer();
             Socket socket = new Socket(this.myHost, this.portNumber);
             PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+	    startTimer(); //moved the timers closer to the request
             output.println(this.serverCommand);
-	    String line = null;
 	    //System.out.println("From Server: ");
 	    while((line = input.readLine()) != null) {
             	System.out.println(line);
 	    }
+	    endTimer();
 	    System.out.println("----------------------------------------------------------------------");
             socket.close();
-            endTimer();
+            
         }
         catch (UnknownHostException ex) {
             ex.printStackTrace();
