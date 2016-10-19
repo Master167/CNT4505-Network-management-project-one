@@ -1,4 +1,4 @@
-package clientside;
+//package clientside;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
